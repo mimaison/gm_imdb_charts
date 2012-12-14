@@ -4,6 +4,7 @@
 // @grant          none
 // @description    Keep track of the movies you've seen in the IMDB top 250 !
 // @include        http://www.imdb.com/chart/top
+// @version        1.1
 // ==/UserScript==
 
 (function(window, document, undefined) {
@@ -14,9 +15,9 @@
 		table: null,
 
 		init: function() {
-			GmImdb.table = GmImdb.getTable();
-			if (GmImdb.table === null) return;
-			GmImdb.run();
+			this.table = this.getTable();
+			if (this.table === null) return;
+			this.run();
 		},
 
 		getTable: function() {
@@ -31,13 +32,13 @@
 
 		toggle: function(event) {
 			if (this.checked) {
-				GmImdb.Storage.add(this.id);
-				GmImdb.checked++;
+				this.Storage.add(this.id);
+				this.checked++;
 			} else {
-				GmImdb.Storage.remove(this.id);
-				GmImdb.checked--;
+				this.Storage.remove(this.id);
+				this.checked--;
 			}
-			GmImdb.updateStats();
+			this.updateStats();
 		},
 
 		extractID: function(url) {
@@ -45,21 +46,21 @@
 		},
 
 		run: function() {
-			var movies = GmImdb.getMovies();
-			GmImdb.addCheckBoxes(movies);
-			GmImdb.addStats();
+			var movies = this.getMovies();
+			this.addCheckBoxes(movies);
+			this.addStats();
 		},
 
 		getMovies: function() {
-			if (!GmImdb.Storage.supported()) {
+			if (!this.Storage.supported()) {
 				alert('No Local Storage support');
 				return;
 			}
-			return GmImdb.Storage.get();
+			return this.Storage.get();
 		},
 
 		addCheckBoxes: function(movies) {
-			var rows = GmImdb.table.getElementsByTagName('tr');
+			var rows = this.table.getElementsByTagName('tr');
 			for (var i = 0; i < rows.length; i++) {
 				var cols = rows[i].getElementsByTagName('td');
 				var col = document.createElement('td');
@@ -71,7 +72,7 @@
 					var title = GmImdb.extractID(cols[2].getElementsByTagName('a')[0].href);
 					var checked = '';
 					if (movies.indexOf(title) != -1) {
-						GmImdb.checked++;
+						this.checked++;
 						checked = ' checked="checked"';
 					}
 					col.innerHTML = '<input type="checkbox" id="' + title + '" ' + checked + '/>';
@@ -82,17 +83,17 @@
 		},
 
 		addStats: function() {
-			var parent = GmImdb.table.parentNode;
+			var parent = this.table.parentNode;
 			var stat = document.createElement('div');
 			stat.id = 'GmImdbStats';
 			stat.align = 'center';
-			parent.insertBefore(stat, GmImdb.table);
-			GmImdb.updateStats();
+			parent.insertBefore(stat, this.table);
+			this.updateStats();
 		},
 
 		updateStats: function() {
 			var element = document.getElementById('GmImdbStats');
-			element.innerHTML = 'You have seen ' + GmImdb.checked + ' movie' + ((GmImdb.checked != 1) ? "s" : "") + ' of the IMDb Top 250 (' + (GmImdb.checked * 100 / 250) + '%) !';
+			element.innerHTML = 'You have seen ' + this.checked + ' movie' + ((this.checked != 1) ? "s" : "") + ' of the IMDb Top 250 (' + (this.checked * 100 / 250) + '%) !';
 		},
 
 		Storage: {
@@ -104,12 +105,12 @@
 				}
 			},
 			add: function(id) {
-				var movies = GmImdb.Storage.get();
+				var movies = this.get();
 				movies.push(id);
 				localStorage[GmImdb.localStorageName] = movies.join();
 			},
 			remove: function(id) {
-				var movies = GmImdb.Storage.get();
+				var movies = this.get();
 				var index = movies.indexOf(id);
 				if (index != -1) movies.splice(index, 1);
 				localStorage[GmImdb.localStorageName] = movies.join();
