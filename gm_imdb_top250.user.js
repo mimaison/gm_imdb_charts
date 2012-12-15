@@ -4,7 +4,7 @@
 // @grant          none
 // @description    Keep track of the movies you've seen in the IMDB top 250 !
 // @include        http://www.imdb.com/chart/top
-// @version        1.1
+// @version        1.1.1
 // ==/UserScript==
 
 (function(window, document, undefined) {
@@ -69,7 +69,7 @@
 					col.innerHTML = '<font size="-1" face="Arial, Helvetica, sans-serif"><b>Seen</b></font>';
 					rows[i].appendChild(col);
 				} else {
-					var title = GmImdb.extractID(cols[2].getElementsByTagName('a')[0].href);
+					var title = this.extractID(cols[2].getElementsByTagName('a')[0].href);
 					var checked = '';
 					if (movies.indexOf(title) != -1) {
 						this.checked++;
