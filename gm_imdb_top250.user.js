@@ -4,7 +4,7 @@
 // @grant          none
 // @description    Keep track of the movies you've seen in the IMDB top 250 !
 // @include        http://www.imdb.com/chart/top
-// @version        1.1.1
+// @version        1.1.2
 // ==/UserScript==
 
 (function(window, document, undefined) {
@@ -93,7 +93,7 @@
 
 		updateStats: function() {
 			var element = document.getElementById('GmImdbStats');
-			element.innerHTML = 'You have seen ' + this.checked + ' movie' + ((this.checked != 1) ? "s" : "") + ' of the IMDb Top 250 (' + (this.checked * 100 / 250) + '%) !';
+			element.innerHTML = 'You have seen ' + this.checked + ' movie' + ((this.checked != 1) ? "s" : "") + ' from the IMDb Top 250 (' + (this.checked * 100 / 250) + '%) !';
 		},
 
 		Storage: {
