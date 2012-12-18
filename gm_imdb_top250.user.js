@@ -4,11 +4,11 @@
 // @grant          none
 // @description    Keep track of the movies you've seen in the IMDB top 250 !
 // @include        http://www.imdb.com/chart/top
-// @version        1.1.2
+// @version        1.1.3
 // ==/UserScript==
 
 (function(window, document, undefined) {
-
+	"use strict";
 	var GmImdb = {
 		localStorageName: 'IMDB_Movies',
 		checked: 0,
@@ -16,21 +16,23 @@
 
 		init: function() {
 			this.table = this.getTable();
-			if (this.table === null) return;
+			if (this.table === null) {
+				return;
+			}
 			this.run();
 		},
 
 		getTable: function() {
 			var tables = document.getElementsByTagName('table');
 			for (var i = 0; i < tables.length; i++) {
-				if (tables[i].getElementsByTagName('tr').length == 251) {
+				if (tables[i].getElementsByTagName('tr').length === 251) {
 					return tables[i];
 				}
 			}
 			return null;
 		},
 
-		toggle: function(event) {
+		toggle: function() {
 			if (this.checked) {
 				this.Storage.add(this.id);
 				this.checked++;
@@ -65,13 +67,13 @@
 				var cols = rows[i].getElementsByTagName('td');
 				var col = document.createElement('td');
 				col.align = 'center';
-				if (i == 0) {
+				if (i === 0) {
 					col.innerHTML = '<font size="-1" face="Arial, Helvetica, sans-serif"><b>Seen</b></font>';
 					rows[i].appendChild(col);
 				} else {
 					var title = this.extractID(cols[2].getElementsByTagName('a')[0].href);
 					var checked = '';
-					if (movies.indexOf(title) != -1) {
+					if (movies.indexOf(title) !== -1) {
 						this.checked++;
 						checked = ' checked="checked"';
 					}
@@ -93,13 +95,13 @@
 
 		updateStats: function() {
 			var element = document.getElementById('GmImdbStats');
-			element.innerHTML = 'You have seen ' + this.checked + ' movie' + ((this.checked != 1) ? "s" : "") + ' from the IMDb Top 250 (' + (this.checked * 100 / 250) + '%) !';
+			element.innerHTML = 'You have seen ' + this.checked + ' movie' + ((this.checked !== 1) ? "s" : "") + ' from the IMDb Top 250 (' + (this.checked * 100 / 250) + '%) !';
 		},
 
 		Storage: {
 			supported: function() {
 				try {
-					return 'localStorage' in window && window['localStorage'] !== null;
+					return 'localStorage' in window && window.localStorage !== null;
 				} catch (e) {
 					return false;
 				}
@@ -112,12 +114,14 @@
 			remove: function(id) {
 				var movies = this.get();
 				var index = movies.indexOf(id);
-				if (index != -1) movies.splice(index, 1);
+				if (index !== -1) {
+					movies.splice(index, 1);
+				}
 				localStorage[GmImdb.localStorageName] = movies.join();
 			},
 			get: function() {
 				var movies = localStorage[GmImdb.localStorageName];
-				return (movies == undefined) ? [] : movies.split(',');
+				return (movies === undefined) ? [] : movies.split(',');
 			}
 		}
 	};
