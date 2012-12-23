@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name           IMDB Top 250
+// @name           IMDb Top 250
 // @namespace      imdbtop250
 // @grant          none
-// @description    Keep track of the movies you've seen in the IMDB top 250 !
+// @description    Keep track of the movies you've seen in the IMDb Top 250 !
 // @include        http://www.imdb.com/chart/top
-// @version        1.1.3
+// @version        1.2.1
 // ==/UserScript==
 
 (function(window, document, undefined) {
@@ -34,13 +34,13 @@
 
 		toggle: function() {
 			if (this.checked) {
-				this.Storage.add(this.id);
-				this.checked++;
+				GmImdb.Storage.add(this.id);
+				GmImdb.checked++;
 			} else {
-				this.Storage.remove(this.id);
-				this.checked--;
+				GmImdb.Storage.remove(this.id);
+				GmImdb.checked--;
 			}
-			this.updateStats();
+			GmImdb.updateStats();
 		},
 
 		extractID: function(url) {
@@ -79,7 +79,7 @@
 					}
 					col.innerHTML = '<input type="checkbox" id="' + title + '" ' + checked + '/>';
 					rows[i].appendChild(col);
-					document.getElementById(title).addEventListener('click', GmImdb.toggle, true);
+					document.getElementById(title).addEventListener('click', this.toggle, true);
 				}
 			}
 		},
@@ -107,12 +107,12 @@
 				}
 			},
 			add: function(id) {
-				var movies = this.get();
+				var movies = GmImdb.Storage.get();
 				movies.push(id);
 				localStorage[GmImdb.localStorageName] = movies.join();
 			},
 			remove: function(id) {
-				var movies = this.get();
+				var movies = GmImdb.Storage.get();
 				var index = movies.indexOf(id);
 				if (index !== -1) {
 					movies.splice(index, 1);
