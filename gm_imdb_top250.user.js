@@ -3,8 +3,8 @@
 // @namespace      imdbtop250
 // @grant          none
 // @description    Keep track of the movies you've seen in the IMDb Top 250 !
-// @include        http://www.imdb.com/chart/top
-// @version        1.2.1
+// @include        http://www.imdb.com/chart/top*
+// @version        1.2.2
 // ==/UserScript==
 
 (function(window, document, undefined) {
