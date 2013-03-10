@@ -1,7 +1,7 @@
-gm_imdb_top250
+gm_imdb_charts
 ==============
 
-This script helps you keep track of the movies you have seen in the IMDb Top 250. When you have seen a movie, simply check the box next to the movie title and it will be added to your list.
+This script helps you keep track of the movies you have seen in the IMDb Top 250 and Bottom 100. When you have seen a movie, simply check the box next to the movie title and it will be added to your list.
 
 The script also displays a summary at the top of the table showing you how many movies you have seen.
 
