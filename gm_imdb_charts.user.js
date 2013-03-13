@@ -1,17 +1,17 @@
 // ==UserScript==
-// @name           	IMDb Top 250 & Bottom 100 
-// @namespace      	https://github.com/mimaison/gm_imdb_charts
-// @grant          	none
-// @description    	Keep track of the movies you've seen in the IMDb Top 250 and Bottom 100 !
-// @updateURL				https://github.com/mimaison/gm_imdb_charts/blob/master/gm_imdb_top250.meta.js
-// @downloadURL 		https://github.com/mimaison/gm_imdb_charts/blob/master/gm_imdb_top250.user.js
-// @match        		http://www.imdb.com/chart/top*
-// @match        		http://www.imdb.com/chart/bottom*
-// @version        	2.0
+// @name            IMDb Top 250 & Bottom 100
+// @version         2.0
+// @description     Keep track of the movies you've seen in the IMDb Top 250 and Bottom 100 !
+// @namespace       https://github.com/mimaison/gm_imdb_charts
+// @grant           none
+// @updateURL       https://github.com/mimaison/gm_imdb_charts/blob/master/gm_imdb_top250.meta.js
+// @downloadURL     https://github.com/mimaison/gm_imdb_charts/blob/master/gm_imdb_top250.user.js
+// @match           http://www.imdb.com/chart/top*
+// @match           http://www.imdb.com/chart/bottom*
 // ==/UserScript==
 
 (function(window, document, undefined) {
-	"use strict";
+	'use strict';
 	var GmImdb = {
 		localStorageName: 'IMDB_Movies',
 		localStorageTop: 'mm_movies_top',
