@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            IMDb Top 250 & Bottom 100
-// @version         2.1
+// @version         2.1.1
 // @description     Keep track of the movies you've seen in the IMDb Top 250 and Bottom 100 !
 // @namespace       https://github.com/mimaison/gm_imdb_charts
 // @grant           none
@@ -21,7 +21,10 @@
 
 		init: function() {
 			// Migration from pre 2.0 versions
-			localStorage[GmImdb.localStorageTop] = localStorage[GmImdb.localStorageName].slice(0);
+			if (GmImdb.localStorageName in localStorage) {
+				localStorage[GmImdb.localStorageTop] = localStorage[GmImdb.localStorageName].slice(0);
+				delete localStorage[GmImdb.localStorageName];
+			}
 
 			if (!this.supported()) {
 				this.message('Your browser does not support LocalStorage');
