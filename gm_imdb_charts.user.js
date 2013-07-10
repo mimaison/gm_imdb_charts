@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            IMDb Top 250 & Bottom 100
-// @version         2.1.1
+// @version         2.2.0
 // @description     Keep track of the movies you've seen in the IMDb Top 250 and Bottom 100 !
 // @namespace       https://github.com/mimaison/gm_imdb_charts
 // @grant           none
@@ -10,7 +10,7 @@
 // @match           http://www.imdb.com/chart/bottom*
 // ==/UserScript==
 
-(function(window, document, undefined) {
+(function(window, document) {
 	'use strict';
 	var GmImdb = {
 		localStorageName: 'IMDB_Movies',
@@ -46,6 +46,7 @@
 		message: function(message) {
 			var element = document.getElementById('GmImdbStats');
 			element.innerHTML = message;
+			document.getElementById('reset').addEventListener('click', this.reset, true);
 		},
 
 		getTable: function() {
@@ -124,7 +125,22 @@
 			} else {
 				message += 'Bottom 100 (' + this.checked + '%) !';
 			}
+			message += ' - <a href="#" id="reset">Reset</a>';
 			GmImdb.message(message);
+		},
+
+		reset: function() {
+			var movies = GmImdb.getMovies();
+			for (var i = 0; i < movies.length; i++) {
+				document.getElementById(movies[i]).checked = false;
+			}
+			if (GmImdb.isTop()) {
+				delete localStorage[GmImdb.localStorageTop];
+			} else {
+				delete localStorage[GmImdb.localStorageBottom];
+			}
+			GmImdb.checked = 0;
+			GmImdb.updateStats();
 		},
 
 		supported: function() {
