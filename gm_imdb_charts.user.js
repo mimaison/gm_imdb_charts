@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            IMDb Top 250 & Bottom 100
-// @version         2.2.0
+// @version         2.2.1
 // @description     Keep track of the movies you've seen in the IMDb Top 250 and Bottom 100 !
 // @namespace       https://github.com/mimaison/gm_imdb_charts
 // @grant           none
@@ -34,7 +34,6 @@
 			if (this.table === null) {
 				return;
 			}
-			
 			this.run();
 		},
 
@@ -119,7 +118,7 @@
 		},
 
 		updateStats: function() {
-			var message = 'You have seen ' + this.checked + ' movie' + ((this.checked !== 1) ? "s" : "") + ' of the IMDb ';
+			var message = 'You have seen ' + this.checked + ' movie' + ((this.checked !== 1) ? 's' : '') + ' of the IMDb ';
 			if (GmImdb.isTop()) {
 				message += 'Top 250 (' + (this.checked * 100 / 250) + '%) !';
 			} else {
@@ -130,17 +129,19 @@
 		},
 
 		reset: function() {
-			var movies = GmImdb.getMovies();
-			for (var i = 0; i < movies.length; i++) {
-				document.getElementById(movies[i]).checked = false;
+			if (confirm('Are you sure you want to reset the movies you have seen ? (This cannot be undone)')) {
+				var movies = GmImdb.getMovies();
+				for (var i = 0; i < movies.length; i++) {
+					document.getElementById(movies[i]).checked = false;
+				}
+				if (GmImdb.isTop()) {
+					delete localStorage[GmImdb.localStorageTop];
+				} else {
+					delete localStorage[GmImdb.localStorageBottom];
+				}
+				GmImdb.checked = 0;
+				GmImdb.updateStats();
 			}
-			if (GmImdb.isTop()) {
-				delete localStorage[GmImdb.localStorageTop];
-			} else {
-				delete localStorage[GmImdb.localStorageBottom];
-			}
-			GmImdb.checked = 0;
-			GmImdb.updateStats();
 		},
 
 		supported: function() {
