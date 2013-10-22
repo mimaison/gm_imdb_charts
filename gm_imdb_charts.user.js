@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            IMDb Top 250 & Bottom 100
-// @version         2.2.1
+// @version         2.3
 // @description     Keep track of the movies you've seen in the IMDb Top 250 and Bottom 100 !
 // @namespace       https://github.com/mimaison/gm_imdb_charts
 // @grant           none
@@ -89,13 +89,14 @@
 			var rows = this.table.getElementsByTagName('tr');
 			for (var i = 0; i < rows.length; i++) {
 				var cols = rows[i].getElementsByTagName('td');
-				var col = document.createElement('td');
-				col.align = 'center';
+				var col;
 				if (i === 0) {
-					col.innerHTML = '<font size="-1" face="Arial, Helvetica, sans-serif"><b>Seen</b></font>';
+					col = document.createElement('th');
+					col.innerHTML = 'Seen';
 					rows[i].appendChild(col);
 				} else {
-					var title = this.extractID(cols[2].getElementsByTagName('a')[0].href);
+					col = document.createElement('td');
+					var title = this.extractID(cols[1].getElementsByTagName('a')[0].href);
 					var checked = '';
 					if (movies.indexOf(title) !== -1) {
 						this.checked++;
