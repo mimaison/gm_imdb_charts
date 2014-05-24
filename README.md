@@ -10,7 +10,7 @@ First you need a compatible web browser:
 - Firefox + Greasemonkey plugin
 - Chrome
 
-Then visit http://userscripts.org/scripts/show/153904 and click on the "Install" button"
+Then visit https://github.com/mimaison/gm_imdb_charts/raw/master/gm_imdb_charts.user.js and click on the "Install" button"
 
 ## How it works ##
 It uses the WebStorage API (http://en.wikipedia.org/wiki/Web_storage) of your web browser to store the data so you don't have to worry about privacy. All the data is stored on your computer !
